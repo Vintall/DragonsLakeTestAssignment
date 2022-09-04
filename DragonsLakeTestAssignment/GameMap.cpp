@@ -10,7 +10,17 @@ void GameMap::InstantiateMap()
 	{
 		map.clear();
 	}
-
+	int random_map = rand() % 3;
+	if (random_map == 0)
+		InstantiateMap1();
+	else if (random_map == 1)
+		InstantiateMap2();
+	else
+		InstantiateMap3();
+	
+}
+void GameMap::InstantiateMap1()
+{
 	ConstantsHolder* constants = ConstantsHolder::GetInstance();
 
 	map = std::vector<std::vector<Brick*>>(constants->MapHeight);
@@ -23,22 +33,97 @@ void GameMap::InstantiateMap()
 			float brick_width = 1. * GameWindow::GetInstance()->GetWidth() / constants->MapWidth;
 			float brick_height = brick_width / constants->BrickRatio;
 
-			if (brick_id == 0 || brick_id == 1)
-				map[i][j] = new OneHitBrick(j, i, brick_width, brick_height);
-
-			if (brick_id == 2 || brick_id == 3)
-				map[i][j] = new TwoHitBrick(j, i, brick_width, brick_height);
-
-			if (brick_id == 4)
+			if (j % 3 == 0)
 				map[i][j] = new UnbreakableBrick(j, i, brick_width, brick_height);
+			else
+			{
+
+				if (brick_id == 0 || brick_id == 1)
+					map[i][j] = new OneHitBrick(j, i, brick_width, brick_height);
+
+				if (brick_id == 2 || brick_id == 3)
+					map[i][j] = new TwoHitBrick(j, i, brick_width, brick_height);
+
+				//if (brick_id == 4)
+				//	map[i][j] = new UnbreakableBrick(j, i, brick_width, brick_height);
+
+
+
+				brick_id++;
+				if (brick_id == 4)
+					brick_id = 0;
+
+			}
+		}
+	}
+}
+void GameMap::InstantiateMap2()
+{
+	ConstantsHolder* constants = ConstantsHolder::GetInstance();
+
+	map = std::vector<std::vector<Brick*>>(7);
+	int brick_id = 0;
+	for (int i = 0; i < 7; i++)
+	{
+		map[i] = std::vector<Brick*>(7);
+		for (int j = 0; j < 7; j++)
+		{
+			float brick_width = 1. * GameWindow::GetInstance()->GetWidth() / constants->MapWidth;
+			float brick_height = brick_width / constants->BrickRatio;
+
+			if (brick_id == 0)
+				map[i][j] = new OneHitBrick(j+2, i+6, brick_width, brick_height);
+
+			if (brick_id == 1)
+				map[i][j] = new TwoHitBrick(j+2, i+6, brick_width, brick_height);
+
 
 			brick_id++;
-			if (brick_id == 5)
+			if (brick_id == 2)
 				brick_id = 0;
 		}
 	}
-	
 }
+void GameMap::InstantiateMap3()
+{
+	ConstantsHolder* constants = ConstantsHolder::GetInstance();
+
+	map = std::vector<std::vector<Brick*>>(7);
+	int brick_id = 0;
+	for (int i = 0; i < 7; i++)
+	{
+		int l_widtd = constants->MapWidth;
+		if(i!=6)
+		map[i] = std::vector<Brick*>(l_widtd);
+		else
+		{
+			l_widtd = (constants->MapWidth + 1) / 2;
+			map[i] = std::vector<Brick*>(l_widtd);
+		}
+		for (int j = 0; j < l_widtd; j++)
+		{
+			float brick_width = 1. * GameWindow::GetInstance()->GetWidth() / constants->MapWidth;
+			float brick_height = brick_width / constants->BrickRatio;
+
+			if (i == 6)
+			{
+				map[i][j] = new UnbreakableBrick(j*2, i + 10, brick_width, brick_height);
+			}
+			else
+			{
+				if (rand() % 2 == 0)
+				{
+					map[i][j] = new OneHitBrick(j, i + 2, brick_width, brick_height);
+				}
+				else
+				{
+					map[i][j] = new TwoHitBrick(j, i + 2, brick_width, brick_height);
+				}
+			}
+		}
+	}
+}
+
 int GameMap::GetWidth()
 {
 	return ConstantsHolder::GetInstance()->MapWidth;

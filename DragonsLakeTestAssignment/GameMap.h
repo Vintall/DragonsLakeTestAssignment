@@ -12,6 +12,9 @@ private:
 	static GameMap* instance;
 	std::vector<std::vector<Brick*>> map;
 	GameMap();
+	void InstantiateMap1();
+	void InstantiateMap2();
+	void InstantiateMap3();
 public:
 	int GetWidth();
 	int GetHeight();

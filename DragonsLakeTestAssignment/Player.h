@@ -10,7 +10,7 @@ class Player
 {
 private:
 	Platform* platform;
-	int score = 110;
+	int score = 0;
 	std::vector<Ability*> abilities;
 	int ability_cost = 20;
 	int max_speed_up = 200; // %

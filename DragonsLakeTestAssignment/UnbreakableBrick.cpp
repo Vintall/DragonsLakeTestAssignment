@@ -6,6 +6,7 @@ UnbreakableBrick::UnbreakableBrick(int x, int y, float width, float height)
 	y_pos = y;
 	this->width = width;
 	this->height = height;
+	type = BrickType::Unbreakable;
 }
 
 void UnbreakableBrick::DrawBrick()
@@ -16,11 +17,7 @@ void UnbreakableBrick::DrawBrick()
 		game_window->GetStartXPoint() + x_pos * width,
 		game_window->GetStartYPoint() + y_pos * height);
 }
-void UnbreakableBrick::InstantiateBrick()
+bool UnbreakableBrick::HitBrick()
 {
-
-}
-void UnbreakableBrick::HitBrick()
-{
-
+	return false;
 }

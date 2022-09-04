@@ -1,7 +1,5 @@
 #include "ConsoleLineHandler.h"
-#include <string.h>
-#include <iostream>
-#include "Window.h"
+
 
 ConsoleLineHandler::ConsoleLineHandler() {}
 

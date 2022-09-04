@@ -140,29 +140,45 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ability.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="BallCollisionController.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="ConsoleLineHandler.cpp" />
+    <ClCompile Include="ConstantsHolder.cpp" />
     <ClCompile Include="DragonsLakeTestAssignment.cpp" />
+    <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="GameWindow.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="OneHitBrick.cpp" />
     <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SpeedDownAbility.cpp" />
+    <ClCompile Include="SpeedUpAbility.cpp" />
     <ClCompile Include="SpriteHolder.cpp" />
     <ClCompile Include="TwoHitBrick.cpp" />
     <ClCompile Include="UnbreakableBrick.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ability.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="BallCollisionController.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="ConsoleLineHandler.h" />
+    <ClInclude Include="ConstantsHolder.h" />
+    <ClInclude Include="GameController.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GameWindow.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="OneHitBrick.h" />
     <ClInclude Include="Platform.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="SpeedDownAbility.h" />
+    <ClInclude Include="SpeedUpAbility.h" />
     <ClInclude Include="SpriteHolder.h" />
     <ClInclude Include="TwoHitBrick.h" />
     <ClInclude Include="UnbreakableBrick.h" />

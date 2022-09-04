@@ -2,37 +2,50 @@
 
 GameMap::GameMap() 
 {
-	map = new Brick ** [height];
-	int fdas = 0;
-	for (int i = 0; i < height; i++)
+	InstantiateMap();
+}
+void GameMap::InstantiateMap()
+{
+	if (map.size() != 0)
 	{
-		map[i] = new Brick*[width];
+		map.clear();
+	}
 
-		for (int j = 0; j < width; j++)
+	ConstantsHolder* constants = ConstantsHolder::GetInstance();
+
+	map = std::vector<std::vector<Brick*>>(constants->MapHeight);
+	int brick_id = 0;
+	for (int i = 0; i < constants->MapHeight; i++)
+	{
+		map[i] = std::vector<Brick*>(constants->MapWidth);
+		for (int j = 0; j < constants->MapWidth; j++)
 		{
-			if (fdas == 0)
-				map[i][j] = new OneHitBrick(j, i, 1. * GameWindow::GetInstance()->GetWidth() / width, GameWindow::GetInstance()->GetWidth() / width / brick_ratio);
+			float brick_width = 1. * GameWindow::GetInstance()->GetWidth() / constants->MapWidth;
+			float brick_height = brick_width / constants->BrickRatio;
 
-			if (fdas == 1)
-				map[i][j] = new TwoHitBrick(j, i, 1. * GameWindow::GetInstance()->GetWidth() / width, GameWindow::GetInstance()->GetWidth() / width / brick_ratio);
+			if (brick_id == 0 || brick_id == 1)
+				map[i][j] = new OneHitBrick(j, i, brick_width, brick_height);
 
-			if (fdas == 2)
-				map[i][j] = new UnbreakableBrick(j, i, 1. * GameWindow::GetInstance()->GetWidth() / width, GameWindow::GetInstance()->GetWidth() / width / brick_ratio);
+			if (brick_id == 2 || brick_id == 3)
+				map[i][j] = new TwoHitBrick(j, i, brick_width, brick_height);
 
-			fdas++;
-			if (fdas == 3)
-				fdas = 0;
+			if (brick_id == 4)
+				map[i][j] = new UnbreakableBrick(j, i, brick_width, brick_height);
+
+			brick_id++;
+			if (brick_id == 5)
+				brick_id = 0;
 		}
 	}
+	
 }
-
 int GameMap::GetWidth()
 {
-	return width;
+	return ConstantsHolder::GetInstance()->MapWidth;
 }
 int GameMap::GetHeight()
 {
-	return height;
+	return ConstantsHolder::GetInstance()->MapHeight;
 }
 
 GameMap* GameMap::instance = nullptr;
@@ -46,13 +59,41 @@ GameMap* GameMap::GetInstance()
 }
 void GameMap::DrawAllBricks()
 {
-	for (int i = 0; i < height; i++)
+	for (int i = 0; i < map.size(); i++)
 	{
-		for (int j = 0; j < width; j++)
+		for (int j = 0; j < map[i].size(); j++)
 		{
-			Brick fdas = *map[i][j];
-			//OneHitBrick fds = (OneHitBrick)map[i][j];
+			if (map[i][j] == nullptr)
+				continue;
+
 			map[i][j]->DrawBrick();
 		}
 	}
+}
+const std::vector<std::vector<Brick*>>& GameMap::GetMap()
+{
+	return map;
+}
+void GameMap::RemoveBrick(int i, int j)
+{
+	Brick* to_destroy = map[i][j];
+	map[i].erase(map[i].begin() + j);
+	delete(to_destroy);
+}
+void GameMap::CheckForGameOverCondition()
+{
+	bool is_game_over = true;
+	for (int i = 0; i < map.size(); i++)
+	{
+		for (int j = 0; j < map[i].size(); j++)
+		{
+			if (map[i][j]->GetType() != Brick::BrickType::Unbreakable)
+			{
+				is_game_over = false;
+				i = map.size();
+				break;
+			}
+		}
+	}
+	ready_for_game_over = is_game_over;
 }

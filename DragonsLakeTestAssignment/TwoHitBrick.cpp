@@ -1,18 +1,11 @@
 #include "TwoHitBrick.h"
 
-void TwoHitBrick::InstantiateBrick()
-{
-	hit_count = 2;
-}
-void TwoHitBrick::HitBrick()
+bool TwoHitBrick::HitBrick()
 {
 	hit_count--;
-
-	if (hit_count == 0) 
-	{
-		//remove_brick
-	}
-		
+	if (hit_count == 0)
+		is_destroyed = true;
+	return hit_count == 0;
 }
 TwoHitBrick::TwoHitBrick(int x, int y, float width, float height)
 {
@@ -21,6 +14,7 @@ TwoHitBrick::TwoHitBrick(int x, int y, float width, float height)
 	this->width = width;
 	this->height = height;
 	hit_count = 2;
+	type = BrickType::TwoHit;
 }
 void TwoHitBrick::DrawBrick()
 {

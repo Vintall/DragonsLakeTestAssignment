@@ -3,18 +3,24 @@
 #include "OneHitBrick.h"
 #include "TwoHitBrick.h"
 #include "UnbreakableBrick.h"
+#include <vector>
+#include "ConstantsHolder.h"
+
 class GameMap
 {
 private:
 	static GameMap* instance;
-	const int width = 11;
-	const int height = 22;
-	const float brick_ratio = 3; //  width/height 
-	Brick*** map;
+	std::vector<std::vector<Brick*>> map;
 	GameMap();
 public:
 	int GetWidth();
 	int GetHeight();
 	static GameMap* GetInstance();
 	void DrawAllBricks();
+	const std::vector<std::vector<Brick*>>& GetMap();
+	void RemoveBrick(int, int);
+	void CheckForGameOverCondition();
+	void InstantiateMap();
+
+	bool ready_for_game_over = false;
 };

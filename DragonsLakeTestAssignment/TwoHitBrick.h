@@ -7,8 +7,7 @@ class TwoHitBrick : public Brick
 private:
 
 public:
-	void InstantiateBrick();
-	void HitBrick();
+	bool HitBrick();
 	TwoHitBrick(int, int, float, float);
 	void DrawBrick();
 };

@@ -1,6 +1,14 @@
 #pragma once
 
 #include "Framework.h"
+#include "GameController.h"
+#include <iostream>
+#include "Window.h"
+#include "GameWindow.h"
+#include <string>
+#include "ConsoleLineHandler.h"
+#include "GameMap.h"
+#include "Input.h"
 
 class GameEngine : public Framework
 {

@@ -1,5 +1,7 @@
 #pragma once
-#include <string>
+#include <string.h>
+#include <iostream>
+#include "Window.h"
 class ConsoleLineHandler
 {
 private:

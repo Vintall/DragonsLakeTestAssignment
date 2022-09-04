@@ -8,12 +8,31 @@ Brick::~Brick()
 {
 
 }
-void Brick::HitBrick()
+bool Brick::HitBrick()
+{
+	return true;
+}
+void Brick::DrawBrick() 
 {
 
 }
-void Brick::InstantiateBrick()
+float Brick::GetWidth()
 {
-
+	return width;
 }
-void Brick::DrawBrick() {}
+float Brick::GetHeight()
+{
+	return height;
+}
+int Brick::GetX()
+{
+	return x_pos;
+}
+int Brick::GetY()
+{
+	return y_pos;
+}
+Brick::BrickType Brick::GetType()
+{
+	return type;
+}

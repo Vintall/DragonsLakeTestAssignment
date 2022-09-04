@@ -1,10 +1,5 @@
 #include "GameEngine.h"
-#include <iostream>
-#include "Window.h"
-#include "GameWindow.h"
-#include <string>
-#include "ConsoleLineHandler.h"
-#include "GameMap.h"
+
 
 void GameEngine::PreInit(int& width, int& height, bool& fullscreen)
 {
@@ -14,48 +9,57 @@ void GameEngine::PreInit(int& width, int& height, bool& fullscreen)
 }
 bool GameEngine::Init()
 {
+	GameController::GetInstance();
 	return true;
 }
 
 void GameEngine::Close()
 {
-
+	
 }
 
 bool GameEngine::Tick()
 {
 	Window::GetInstance()->DrawBackgroundSprite();
 	GameWindow::GetInstance()->DrawBackgroundSprite();
-	GameMap::GetInstance()->DrawAllBricks();
+
+	if (GameController::GetInstance()->game_state == GameController::GameState::InGame)
+	{
+		GameController::GetInstance()->CheckBallCollisions();
+		GameController::GetInstance()->GetPlayer()->CheckAbilitiesTimer(getTickCount());
+
+		GameMap::GetInstance()->DrawAllBricks();
+		GameController::GetInstance()->GetPlayer()->GetPlatform()->DrawPlatform();
+		GameController::GetInstance()->GetBall()->DrawBall();
+	}
+
+	Input::GetInstance()->InputTick();
+
 	return false;
 }
 
 void GameEngine::onMouseMove(int x, int y, int xrelative, int yrelative)
 {
-	system("cls");
-	std::cout << x << "   " << y << "         " << xrelative << "   " << yrelative;
+	Input::GetInstance()->OnMouseButtonMove(x, y);
 }
 
 void GameEngine::onMouseButtonClick(FRMouseButton button, bool isReleased)
 {
-
+	if (!isReleased)
+		Input::GetInstance()->MouseButtonPressed(button);
+	else
+		Input::GetInstance()->MouseButtonReleased(button);
 }
 
 void GameEngine::onKeyPressed(FRKey k)
 {
-	if (k == FRKey::LEFT)
-	{
-		std::cout << "Left" << std::endl;
-	}
-	if (k == FRKey::RIGHT)
-	{
-		std::cout << "Right" << std::endl;
-	}
+	Input::GetInstance()->KeyboardKeyPressed(k);
+	
 }
 
 void GameEngine::onKeyReleased(FRKey k)
 {
-
+	Input::GetInstance()->KeyboardKeyReleased(k);
 }
 
 const char* GameEngine::GetTitle()

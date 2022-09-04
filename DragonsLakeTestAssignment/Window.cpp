@@ -1,10 +1,10 @@
 #include "Window.h"
 
-Window* Window::instance = 0;
+Window* Window::instance = nullptr;
 
 Window* Window::GetInstance()
 {
-	if (instance == 0)
+	if (instance == nullptr)
 		instance = new Window();
 
 	return instance;

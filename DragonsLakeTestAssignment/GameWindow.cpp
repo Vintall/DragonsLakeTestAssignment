@@ -1,5 +1,5 @@
 #include "GameWindow.h"
-#include "Window.h"
+
 
 
 GameWindow::GameWindow() {}
@@ -13,40 +13,46 @@ GameWindow* GameWindow::GetInstance()
 	return instance;
 }
 
-int GameWindow::GetWidth()
+float GameWindow::GetWidth()
 {
-	if (width != -1)
-		return width;
-
 	if (Window::GetInstance()->GetWidth() >= Window::GetInstance()->GetHeight())
-		return Window::GetInstance()->GetHeight() * GameWindowRatio;
+		return Window::GetInstance()->GetHeight() * ConstantsHolder::GetInstance()->GameWindowRatio;
 	else
 		return Window::GetInstance()->GetWidth();
 }
-int GameWindow::GetHeight()
+float GameWindow::GetHeight()
 {
-	if (height != -1)
-		return height;
-
 	if (Window::GetInstance()->GetWidth() >= Window::GetInstance()->GetHeight())
 		return Window::GetInstance()->GetHeight();
 	else
-		return Window::GetInstance()->GetWidth() / GameWindowRatio;
-}
-void GameWindow::ResetWindow()
-{
-	width = -1;
-	height = -1;
+		return Window::GetInstance()->GetWidth() / ConstantsHolder::GetInstance()->GameWindowRatio;
 }
 void GameWindow::DrawBackgroundSprite()
 {
 	drawSprite(SpriteHolder::GetInstance()->GetGameWindowBackground(), GetStartXPoint(), GetStartYPoint());
 }
-int GameWindow::GetStartXPoint()
+float GameWindow::GetStartXPoint()
 {
 	return Window::GetInstance()->GetWidth() / 2 - GetWidth() / 2;
 }
-int GameWindow::GetStartYPoint()
+float GameWindow::GetStartYPoint()
 {
 	return Window::GetInstance()->GetHeight() / 2 - GetHeight() / 2;
+}
+
+float GameWindow::GetXLocalFromGlobal(float x_global)
+{
+	return (x_global - GetStartXPoint()) / GetWidth();
+}
+float GameWindow::GetXGlobalFromLocal(float x_local)
+{
+	return x_local * GetWidth() + GetStartXPoint();
+}
+float GameWindow::GetYLocalFromGlobal(float y_global)
+{
+	return (y_global - GetStartYPoint()) / GetHeight();
+}
+float GameWindow::GetYGlobalFromLocal(float y_local)
+{
+	return y_local * GetHeight() + GetStartYPoint();
 }
